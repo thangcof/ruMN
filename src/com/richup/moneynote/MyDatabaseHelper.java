@@ -8,12 +8,12 @@ import android.util.Log;
 
 public class MyDatabaseHelper extends SQLiteOpenHelper {
 
-	private static final String DATABASE_NAME = "DBName";
+	private static final String DATABASE_NAME = "MoneyNote";
 
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 1;
 
     // Database creation sql statement
-    private static final String DATABASE_CREATE = "create table MyEmployees ( _id integer primary key,name text not null);";
+    private static final String DATABASE_CREATE = "create table Types(_id integer primary key, type text not null);create table Notes ( _id integer primary key,description text, money integer not nul, is_necessary integer, type integer, spending_date text not null, last_modified text not null,FOREIGN KEY(type) REFERENCES types(_id));";
 
     public MyDatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -32,7 +32,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         Log.w(MyDatabaseHelper.class.getName(),
                 "Upgrading database from version " + oldVersion + " to "
                         + newVersion + ", which will destroy all old data");
-        database.execSQL("DROP TABLE IF EXISTS MyEmployees");
+        database.execSQL("DROP TABLE IF EXISTS Notes;");
         onCreate(database);
     }
 }
